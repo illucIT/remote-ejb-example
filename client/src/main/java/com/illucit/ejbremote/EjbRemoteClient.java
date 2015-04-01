@@ -2,8 +2,6 @@ package com.illucit.ejbremote;
 
 import static javax.naming.Context.INITIAL_CONTEXT_FACTORY;
 import static javax.naming.Context.PROVIDER_URL;
-import static javax.naming.Context.SECURITY_CREDENTIALS;
-import static javax.naming.Context.SECURITY_PRINCIPAL;
 import static javax.naming.Context.URL_PKG_PREFIXES;
 
 import java.util.Hashtable;
@@ -35,13 +33,9 @@ public class EjbRemoteClient {
 		String host = "127.0.0.1";
 		String port = "8080"; // Wildfly HTTP port
 
-		// Create with wildfly/bin/add_user.sh as application user
-		String applicationUsername = "remote";
-		String applicationPassword = "remote";
-
 		Context remotingContext;
 		try {
-			remotingContext = createRemoteEjbContext(host, port, applicationUsername, applicationPassword);
+			remotingContext = createRemoteEjbContext(host, port);
 		} catch (NamingException e) {
 			System.err.println("Error setting up remoting context");
 			e.printStackTrace();
@@ -107,16 +101,11 @@ public class EjbRemoteClient {
 	 *            host to connect to (e.g. "127.0.0.1")
 	 * @param port
 	 *            port to connect to (wildfly HTTP port, e.g. 8080)
-	 * @param remoteUserPrincipal
-	 *            username of application user
-	 * @param remoteUserPassword
-	 *            password of application user
 	 * @return remote EJB context
 	 * @throws NamingException
 	 *             if creating the context fails
 	 */
-	private static Context createRemoteEjbContext(String host, String port, String remoteUserPrincipal,
-			String remoteUserPassword) throws NamingException {
+	private static Context createRemoteEjbContext(String host, String port) throws NamingException {
 
 		Hashtable<Object, Object> props = new Hashtable<>();
 
@@ -132,8 +121,6 @@ public class EjbRemoteClient {
 		props.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS", false);
 
 		props.put(PROVIDER_URL, "http-remoting://" + host + ":" + port);
-		props.put(SECURITY_PRINCIPAL, remoteUserPrincipal);
-		props.put(SECURITY_CREDENTIALS, remoteUserPassword);
 		props.put("remote.connection.default.host", host);
 		props.put("remote.connection.default.port", port);
 
