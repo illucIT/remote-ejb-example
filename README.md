@@ -37,3 +37,7 @@ To compile and run the example you can simply use a maven call:
     mvn clean compile package exec:java
 
 You should see the example result "Hello World" and the the remotely queried Wildfly Home Dir on the output.
+
+#Contributor
+
+- @ryankarl65
