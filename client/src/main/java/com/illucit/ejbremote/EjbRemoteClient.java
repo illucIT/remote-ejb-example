@@ -40,10 +40,11 @@ public class EjbRemoteClient {
             return;
         }
 
-        final String appName = "ejb-remote";
-        final String moduleName = "PersonServiceImpl";
-        final String beanName = "ejb-remote";
-        final String remoteInterface = "PersonInterface";
+
+        final String appName = "ejb-remote-server";
+        final String moduleName = "";
+        final String beanName = "ExampleServiceImpl";
+        final String remoteInterface = "com.illucit.ejbremote.server.ExampleService";
 
         String ejbUrl = EjbUrlUtils.getEjbUrl(appName, moduleName, beanName, remoteInterface);
 
